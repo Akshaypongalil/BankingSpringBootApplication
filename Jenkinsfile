@@ -39,24 +39,9 @@ node{
 		echo "Image push complete"
         } 
     }    
-	// stage('Ansible Playbook Execution'){
-	// 		sh "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i inventory.yaml containerDeploy.yaml -e httpPort=$httpPort -e containerName=$containerName -e dockerImageTag=$dockerHubUser/$containerName:$tag -e key_pair_path=/var/lib/jenkins/server.pem --become" 
-	// }
-   stage('Ansible Playbook Execution') {
-     withCredentials([string(credentialsId: 'ssh_password', variable: 'AZ_PASS')]) {
-
-        sh """
-        export ANSIBLE_HOST_KEY_CHECKING=False
-        ansible-playbook -i inventory.yaml containerDeploy.yaml \
-        -e httpPort=$httpPort \
-        -e containerName=$containerName \
-        -e dockerImageTag=$dockerHubUser/$containerName:$tag \
-        -e key_pair_path=/var/lib/jenkins/server.pem \
-        -e ansible_password='$AZ_PASS' \
-        --become
-        """
-    }
-}
+	stage('Ansible Playbook Execution'){
+			sh "export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i inventory.yaml containerDeploy.yaml -e httpPort=$httpPort -e containerName=$containerName -e dockerImageTag=$dockerHubUser/$containerName:$tag -e key_pair_path=/var/lib/jenkins/server.pem --become" 
+	}
 }
 }
 }
